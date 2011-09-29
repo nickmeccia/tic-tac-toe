@@ -51,13 +51,11 @@ while !game.over?
   else
     puts "compy turn"
     if game.try_to_win
-      if game.block_player
-        if first_player == game.compy_team
+    elsif game.block_player
+    elsif first_player == game.compy_team
           game.make_offensive_move
-        else
+    else
           game.make_defensive_move
-        end
-      end
     end
     turn_counter = game.player_team
   end
