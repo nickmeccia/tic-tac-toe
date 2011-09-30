@@ -2,7 +2,7 @@ require_relative 'board.rb'
 
 class Game
   attr_reader :board, :current_player
-  
+
   def initialize(player_one, player_two)
     @board = Board.new(player_one.team, player_two.team)
     @player_one = player_one
