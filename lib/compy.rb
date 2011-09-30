@@ -1,11 +1,6 @@
-class Compy
-  
-  attr_reader :team
-  
-  def initialize(team)
-    @team = team
-  end
-  
+require_relative 'player.rb'
+
+class Compy < Player
   def move_for(board)
     return board.empty_spot_in_group(winning_group(board)) if winning_group(board)
     return board.empty_spot_in_group(blocking_group(board)) if blocking_group(board)

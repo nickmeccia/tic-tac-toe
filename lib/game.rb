@@ -16,11 +16,7 @@ class Game
   
   def make_move(position)
     @board.set_cell(position, current_player.team)
-    if @current_player == @player_one
-      @current_player = @player_two
-    else
-      @current_player = @player_one
-    end 
+    toggle_current_player
   end
   
   def over?
@@ -28,10 +24,8 @@ class Game
   end
 
   def draw?
-    board.cells.each do |position|
-      return false if position == ""
-    end
-    return true
+    return false if won?
+    return board.cells.all? {|cell| cell == @player_one.team || cell == @player_two.team }
   end
 
   def won?
@@ -39,8 +33,18 @@ class Game
     return true if board.columns.any? { |column| winner_in_group(column) }
     return true if board.diagonals.any? { |diagonal| winner_in_group(diagonal) }
   end
-
+  
   def winner_in_group(group)
-    group == ["o", "o", "o"] || group == ["x", "x", "x"]
+    group == [@player_two.team]*3 || group == [@player_one.team]*3
+  end
+  
+  private
+  
+  def toggle_current_player
+    if @current_player == @player_one
+      @current_player = @player_two
+    else
+      @current_player = @player_one
+    end 
   end
 end

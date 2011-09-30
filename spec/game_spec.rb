@@ -1,5 +1,4 @@
 require_relative "../lib/game.rb"
-require_relative "../lib/board.rb"
 require_relative "../lib/human.rb"
 require_relative "../lib/compy.rb"
 
@@ -44,13 +43,29 @@ describe "Game" do
       @game.draw?.should be_false
     end
     
-    it "knows that the game a draw if the board is full" do
-      @game.board.set_cell(0, "x")
+    it "is not a draw if the game is full with a winner" do
+      @game.board.set_cell(0, "o")
       @game.board.set_cell(1, "o")
       @game.board.set_cell(2, "o")
       @game.board.set_cell(3, "o")
       @game.board.set_cell(4, "x")
       @game.board.set_cell(5, "x")
+      @game.board.set_cell(6, "o")
+      @game.board.set_cell(7, "x")
+      @game.board.set_cell(8, "x")
+      @game.draw?.should be_false
+    end
+    
+    it "knows that the game a draw if the board is full" do
+      # x o x
+      # x o o
+      # o x x
+      @game.board.set_cell(0, "x")
+      @game.board.set_cell(1, "o")
+      @game.board.set_cell(2, "x")
+      @game.board.set_cell(3, "x")
+      @game.board.set_cell(4, "o")
+      @game.board.set_cell(5, "o")
       @game.board.set_cell(6, "o")
       @game.board.set_cell(7, "x")
       @game.board.set_cell(8, "x")
