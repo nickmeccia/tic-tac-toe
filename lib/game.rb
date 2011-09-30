@@ -43,24 +43,4 @@ class Game
   def winner_in_group(group)
     group == ["o", "o", "o"] || group == ["x", "x", "x"]
   end
-  
-  def valid_team?(input)
-    if input == "x" || input == "X" || input == "o" || input == "O"
-      return true
-    else
-      return false
-    end
-  end
-
-  def set_teams(team_choice)
-    if team_choice == "x" || team_choice == "X"
-      @player_team = "x"
-      @compy_team = "o"
-    elsif team_choice == "o" || team_choice == "O"
-      @player_team == "o"
-      @compy_team ="x"
-    else
-      return
-    end
-  end  
 end
