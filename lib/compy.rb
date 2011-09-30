@@ -2,7 +2,7 @@ class Compy
   
   attr_reader :team
   
-  def initialize team
+  def initialize(team)
     @team = team
   end
   
