@@ -2,76 +2,47 @@ require_relative "../lib/compy.rb"
 require "board"
 
 describe "Compy" do
-  
-  it "blocks the other player from winning with a move in the right column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(0, "x")
-    board.set_cell(1, "x")
-    comp.move_for(board).should == 2
+  before(:each) do
+    @board = Board.new("o", "x")
+    @comp = Compy.new("o")
   end
   
-  it "blocks the other player from winning with a move in the right column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(3, "x")
-    board.set_cell(4, "x")
-    comp.move_for(board).should == 5
+  it "blocks the other player from winning if the only option is blocking" do
+    @board.set_cell(0, "x")
+    @board.set_cell(1, "x")
+    @comp.move_for(@board).should == 2
   end
   
-  it "blocks the other player from winning with a move in the right column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(6, "x")
-    board.set_cell(7, "x")
-    comp.move_for(board).should == 8
+  it "wins if the only option is winning" do
+    @board.set_cell(0, "o")
+    @board.set_cell(3, "o")
+    @comp.move_for(@board).should == 6
   end
 
-  it "blocks the other player from winning with a move in the middle column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(0, "x")
-    board.set_cell(2, "x")
-    comp.move_for(board).should == 1
+  it "prefers winning to blocking" do
+    # | x | o |   |
+    # | x | o |   |
+    # |   |   |   |
+    @board.set_cell(0, "x")
+    @board.set_cell(1, "o")
+    @board.set_cell(3, "x")
+    @board.set_cell(4, "o")
+    
+    @comp.move_for(@board).should == 7
   end
-
-  it "blocks the other player from winning with a move in the middle column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(3, "x")
-    board.set_cell(5, "x")
-    comp.move_for(board).should == 4
+  
+  it "chooses the center if it cannot win or block" do
+    @comp.move_for(@board).should == 4
   end
-
-  it "blocks the other player from winning with a move in the middle column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(6, "x")
-    board.set_cell(8, "x")
-    comp.move_for(board).should == 7
+  
+  it "chooses the first open spot when the center is taken" do
+    @board.set_cell(4,"o")
+    @comp.move_for(@board).should == 0
   end
-
-  it "blocks the other player from winning with a move in the left column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(1, "x")
-    board.set_cell(2, "x")
-    comp.move_for(board).should == 0
-  end
-
-  it "blocks the other player from winning with a move in the left column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(4, "x")
-    board.set_cell(5, "x")
-    comp.move_for(board).should == 3
-  end
-
-  it "blocks the other player from winning with a move in the left column" do
-    board = Board.new("o", "x")
-    comp = Compy.new("o")
-    board.set_cell(7, "x")
-    board.set_cell(8, "x")
-    comp.move_for(board).should == 6
+  
+  it "chooses a different open spot" do
+    @board.set_cell(0,"o")
+    @board.set_cell(4,"x")
+    @comp.move_for(@board).should == 1
   end
 end

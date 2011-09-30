@@ -1,13 +1,25 @@
 class Board
   
-  attr_reader :player_one, :player_two
+  attr_reader :player_one, :player_two, :cells
     
   def initialize(player_one, player_two)
     @cells = [empty_spot]*9
     @player_one = player_one
     @player_two = player_two
   end
-
+  
+  def print
+    list = []
+    cells.each_with_index do |marker, index|
+      if marker == empty_spot
+        list << index+1
+      else
+        list << marker
+      end
+    end
+    puts "\n#{list[0]} | #{list[1]} | #{list[2]}\n----------\n#{list[3]} | #{list[4]} | #{list[5]}\n----------\n#{list[6]} | #{list[7]} | #{list[8]}\n "
+  end
+  
   def get_cell position
     @cells[position]
   end
@@ -35,6 +47,16 @@ class Board
     ]
   end
   
+  def valid_move?(position)
+    if [0,1,2,3,4,5,6,7,8].include?(position.to_i-1)
+      if get_cell(position-1) == empty_spot
+        return true
+      end
+    else
+      return false
+    end
+  end
+  
   def blocking_group_for(team)
     3.times do |i| # rows
       return [3*i, 3*i + 1, 3*i + 2] if rows[i].sort == [empty_spot, opponent_for(team), opponent_for(team)]
@@ -60,8 +82,22 @@ class Board
   def winning_group_for(team)
     blocking_group_for(opponent_for(team))
   end
+
+  def center
+    4
+  end
   
-  private
+  def empty_at_center?
+    get_cell(4) == empty_spot
+  end
+  
+  def first_empty_cell
+    @cells.each_with_index do |cell, index|
+      return index if cell == empty_spot
+    end
+  end
+  
+  private ################################
   
   def empty_spot
     ""

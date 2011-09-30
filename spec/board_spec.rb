@@ -45,6 +45,27 @@ describe Board do
     board.set_cell(6, "x")    
     board.diagonals.should == [["x", "", ""],["", "", "x"]]
   end
+  
+  it "is valid for an in range move on an empty board" do
+    board = Board.new("o", "x")
+    board.valid_move?(3).should be_true
+  end
+
+  it "is not valid for a move out of range on an empty board" do
+    board = Board.new("o", "x")
+    board.valid_move?(-1).should be_false
+  end
+
+  it "is not valid for a move to a space that is not empty" do
+    board = Board.new("o", "x")
+    board.set_cell(4, "x")
+    board.valid_move?(5).should be_false
+  end
+
+  it "is not valid for a string to be a move" do
+    board = Board.new("o", "x")
+    board.valid_move?("s").should be_false
+  end
 
   context "blocking_group_for" do
     before(:each) do

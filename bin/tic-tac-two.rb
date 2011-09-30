@@ -1,71 +1,63 @@
 require_relative '../lib/game.rb'
+require_relative '../lib/board.rb'
+require_relative '../lib/compy.rb'
 
-# setup some variables & stuff
 game = Game.new
+board = Board.new("x", "o")
+compy = Compy.new("o")
+
 first_player = nil
-turn_counter = nil
+turn_counter = "x"
 winner = "your mom"
 
 
 
-# get the player's team choice
-puts "Choose a team (x or o)"
-team_choice = gets.chomp
-# verify that this choice is valid
-while !game.valid_team?(team_choice)
-  puts "That is neither x nor o!"
-  team_choice = gets.chomp
-end
-# assign teams based on player input
-game.set_teams team_choice
-# set first player
-if rand(2) == 0
-  first_player = game.player_team
-  turn_counter = game.player_team
-else
-  first_player = game.compy_team
-  turn_counter = game.compy_team
-end
+#puts "Choose a team (x or o)"
+#team_choice = gets.chomp
+#while !game.valid_team?(team_choice)
+#  puts "That is neither x nor o!"
+#  team_choice = gets.chomp
+#end
+#game.set_teams(team_choice)
+
+#if rand(2) == 0
+#  first_player = game.player_team
+#  turn_counter = game.player_team
+#else
+#  first_player = game.compy_team
+#  turn_counter = game.compy_team
+#end
 
 
 
 # the main game loop!
-while !game.over?
-
-  game.print
+while !game.over?(board)
+  board.print
 
   # player's turn!
-  if turn_counter == game.player_team
-    # get the player's move
+  if turn_counter == board.player_one
     puts "Where will you move? Pick an empty space, 1-9."
     move_choice = gets.chomp.to_i
-    #verify that this choice is valid
-    while !game.valid_move?(move_choice)
-      puts "That is neither x nor o!"
+    while !board.valid_move?(move_choice)
+      puts "That is not a valid move!"
       move_choice = gets.chomp.to_i
     end
-    game.make_move(move_choice-1, game.player_team)
-    turn_counter = game.compy_team
+    board.set_cell(move_choice-1, board.player_one)
+    turn_counter = board.player_two
 
   # compy's turn!
   else
     puts "compy turn"
-    if game.try_to_win
-    elsif game.block_player
-    elsif first_player == game.compy_team
-          game.make_offensive_move
-    else
-          game.make_defensive_move
-    end
-    turn_counter = game.player_team
+    board.set_cell(compy.move_for(board), board.player_two)
+    turn_counter = board.player_one
   end
 end
 
 
 
 # displays the winner
-game.print
-if game.won? == true
+board.print
+if game.won?(board) == true
   puts "We have a winner! o__o"
 else
   puts "It is a draw. u__u"
