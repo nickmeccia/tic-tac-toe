@@ -1,8 +1,8 @@
 require_relative '../lib/game.rb'
-require_relative '../lib/compy.rb'
 require_relative '../lib/human.rb'
+require_relative '../lib/minimax.rb'
 
-players = [Human.new("x"), Compy.new("o")]
+players = [Human.new("x"), Minimax.new("o")]
 players.shuffle!
 game = Game.new(players.first, players.last)
 

@@ -100,5 +100,47 @@ describe "Game" do
     it "knows if there is a winner in a group" do
       @game.winner_in_group(["x","x","x"]).should be_true
     end
+    
+    it "knows if a specific player won in a row" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(1, @player_one.team)
+      @game.board.set_cell(2, @player_one.team)      
+      @game.player_won?(@player_one).should be_true
+    end
+    
+    it "returns false if the other player won in a row" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(1, @player_one.team)
+      @game.board.set_cell(2, @player_one.team)      
+      @game.player_won?(@player_two).should be_false
+    end
+
+    it "knows if a specific player won in a column" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(3, @player_one.team)
+      @game.board.set_cell(6, @player_one.team)      
+      @game.player_won?(@player_one).should be_true
+    end
+    
+    it "returns false if the other player won in a column" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(3, @player_one.team)
+      @game.board.set_cell(6, @player_one.team)      
+      @game.player_won?(@player_two).should be_false
+    end
+
+    it "knows if a specific player won in a diagonal" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(4, @player_one.team)
+      @game.board.set_cell(8, @player_one.team)      
+      @game.player_won?(@player_one).should be_true
+    end
+    
+    it "returns false if the other player won in a diagonal" do
+      @game.board.set_cell(0, @player_one.team)
+      @game.board.set_cell(4, @player_one.team)
+      @game.board.set_cell(8, @player_one.team)      
+      @game.player_won?(@player_two).should be_false
+    end
   end
 end

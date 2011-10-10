@@ -1,6 +1,6 @@
 class Board
   
-  attr_reader :player_one, :player_two, :cells
+  attr_accessor :player_one, :player_two, :cells
     
   def initialize(player_one, player_two)
     @cells = [empty_spot]*9
@@ -97,12 +97,6 @@ class Board
     end
   end
   
-  private ################################
-  
-  def empty_spot
-    ""
-  end
-  
   def opponent_for(team)
     if team == @player_one
       return @player_two
@@ -110,4 +104,27 @@ class Board
       return @player_one
     end
   end
+ 
+ def remaining_moves
+   count = []
+   9.times do |index|
+     count << index if @cells[index] == empty_spot
+   end
+   return count
+ end
+ 
+ def copy
+   new_board = self.dup
+   new_board.cells = @cells.dup
+#   new_board.player_one = @player_one.dup
+#   new_board.player_one = @player_two.dup
+   return new_board
+ end
+
+  private ################################
+  
+  def empty_spot
+    ""
+  end
+  
 end

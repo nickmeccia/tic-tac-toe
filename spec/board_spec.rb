@@ -181,8 +181,75 @@ describe Board do
     end
     
     it "finds the first column as a winning group" do
-      
+      @board.set_cell(0, "x")
+      @board.set_cell(3, "x")
+      @board.winning_group_for("x").should == [0,3,6]
     end
-    #winner in column, winner in a diag, and no winning spot (nil)
+  end
+
+  context "remaining_moves" do
+    before(:each) do
+      @board = Board.new("o", "x")
+    end
+    it "calculates the number of remaining moves when there is one spot left" do
+      @board.set_cell(0, "x")
+      @board.set_cell(1, "x")
+      @board.set_cell(2, "o")
+      @board.set_cell(3, "x")
+      @board.set_cell(4, "x")
+      @board.set_cell(5, "o")
+      @board.set_cell(6, "x")
+      @board.set_cell(7, "x")
+      @board.remaining_moves.should == [8]
+    end
+    
+    it "calculates the number of remaining moves when there are two spots left" do
+      @board.set_cell(0, "x")
+      @board.set_cell(1, "x")
+      @board.set_cell(2, "o")
+      @board.set_cell(3, "x")
+      @board.set_cell(4, "x")
+      @board.set_cell(5, "o")
+      @board.set_cell(6, "x")
+      @board.remaining_moves.should == [7,8]
+    end
+
+    it "calculates the number of remaining moves when there are no spots left" do
+      @board.set_cell(0, "x")
+      @board.set_cell(1, "x")
+      @board.set_cell(2, "o")
+      @board.set_cell(3, "x")
+      @board.set_cell(4, "x")
+      @board.set_cell(5, "o")
+      @board.set_cell(6, "x")
+      @board.set_cell(7, "x")
+      @board.set_cell(8, "x")
+      @board.remaining_moves.should == []
+    end
+  end
+  
+  context "dup" do
+    before(:each) do
+      @board = Board.new("o", "x")
+    end
+    it "returns a copy of the board" do
+      @board.set_cell(1,"x")
+      new_board = @board.copy
+      new_board.get_cell(1).should == "x"
+    end
+    
+    it "does not affect the original board when changing the new board" do
+      @board.set_cell(1,"x")
+      new_board = @board.copy
+      new_board.set_cell(0, "o")
+      @board.get_cell(0).should_not == "o"
+    end
+
+    it "dups players!" do
+      new_board = @board.copy
+      new_board.player_one = "f"
+      @board.player_one.should_not == "f"
+    end
+
   end
 end
