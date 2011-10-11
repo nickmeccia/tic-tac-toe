@@ -17,7 +17,16 @@ class Board
         list << marker
       end
     end
-    list.map! { |m| m == 'x' ? "\e[1;31mx\e[0m" : m == 'o' ? "\e[1;32mo\e[0m" : m }
+    list.map! do |m|
+      case m
+      when 'x'
+        "\e[1;36mx\e[0m"
+      when 'o'
+        "\e[1;33mo\e[0m"
+      else
+        "\e[1;30m#{m}\e[0m"
+      end
+    end
     puts "\n#{list[0]} | #{list[1]} | #{list[2]}\n----------\n#{list[3]} | #{list[4]} | #{list[5]}\n----------\n#{list[6]} | #{list[7]} | #{list[8]}\n "
   end
   

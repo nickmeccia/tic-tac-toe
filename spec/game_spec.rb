@@ -1,13 +1,11 @@
 require_relative "../lib/game.rb"
 require_relative "../lib/human.rb"
-require_relative "../lib/compy.rb"
 
 describe "Game" do
-#  Game.new(Human.new("x"), Compy.new("o"))
   
   before(:each) do
     @player_one = Human.new("x")
-    @player_two = Compy.new("o")
+    @player_two = Human.new("o")
     @game = Game.new(@player_one, @player_two)
   end
 
