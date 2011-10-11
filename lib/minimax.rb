@@ -10,51 +10,40 @@ end
 
 class Minimax < Player
   def move_for(board)
-    get_max_move(board)#.position
+    get_max_move(board).position
   end
   
 
   def get_max_move(board)
-    # current_max_move = Move.new(nil, -1)
-    max_rating = -1
-    best_position = 0
-#    puts board.remaining_moves.inspect
+    current_max_move = Move.new(0, -1)
     board.remaining_moves.each do |remaining_move|
       new_board = board.copy
       new_board.set_cell(remaining_move, team)
-#      puts "board: #{board.inspect}"
-#      puts "new_board: #{new_board.inspect}"
-      return 1 if player_won?(self, new_board)
-      return 0 if new_board.cells.all? { |cell| cell == new_board.player_one || cell == new_board.player_two }
-      return -1 if player_won?(new_board.opponent_for(self), new_board)
-      new_rating = get_min_move(new_board)#.rating
-      if new_rating > max_rating
-        # current_max_move = Move.new(remaining_move, new_rating)
-        max_rating = new_rating
-        best_position = remaining_move
+      return Move.new(remaining_move, 1) if player_won?(team, new_board)
+      return Move.new(remaining_move, 0) if new_board.cells.all? { |cell| cell == new_board.player_one || cell == new_board.player_two }
+      return Move.new(remaining_move, -1) if player_won?(new_board.opponent_for(team), new_board)
+      new_rating = get_min_move(new_board).rating
+      if new_rating > current_max_move.rating
+        current_max_move = Move.new(remaining_move, new_rating)
       end
     end
-    return best_position
+    return current_max_move
   end
 
   def get_min_move(board)
-    # current_min_move = Move.new(nil, nil)
-    min_rating = +1
-    best_position = 0
+    current_min_move = Move.new(0, 1)
     board.remaining_moves.each do |remaining_move|
       new_board = board.copy
       new_board.set_cell(remaining_move, new_board.opponent_for(team));
-      return 1 if player_won?(self, new_board)
-      return 0 if new_board.cells.all? { |cell| cell == new_board.player_one || cell == new_board.player_two }
-      return -1 if player_won?(new_board.opponent_for(self), new_board)
-      new_rating = get_max_move(new_board)#.rating
-      if new_rating < min_rating
-        # current_min_move = Move.new(remaining_move, new_rating)
-        min_rating = new_rating
-        best_position = remaining_move
+      return Move.new(current_min_move.position, 1) if player_won?(team, new_board)
+      return Move.new(current_min_move.position, 0) if new_board.cells.all? { |cell| cell == new_board.player_one || cell == new_board.player_two }
+      return Move.new(current_min_move.position, -1) if player_won?(new_board.opponent_for(team), new_board)
+      new_rating = get_max_move(new_board).rating
+      if new_rating < current_min_move.rating
+        current_min_move = Move.new(remaining_move, new_rating)
       end
     end
-    return best_position
+    return current_min_move
   end
 
   def player_won?(team, board)

@@ -8,9 +8,13 @@ describe "Minimax" do
   end
   
   it "blocks the opponent" do
-    @board.set_cell(0, "x")
-    @board.set_cell(1, "x")
-    @minimax.move_for(@board).should == 2
+    # o - -
+    # x x -
+    # - - -
+    @board.set_cell(0, "o")
+    @board.set_cell(3, "x")
+    @board.set_cell(4, "x")
+    @minimax.move_for(@board).should == 5
   end
 
   xit "should win" do
@@ -19,7 +23,7 @@ describe "Minimax" do
     @minimax.move_for(@board).should == 2
   end
   
-  xit "places a mark in the last available spot on the board" do
+  it "places a mark in the last available spot on the board" do
     # 0 1 2     x x o
     # 3 4 5     o o x
     # 6 7 8     x o x
@@ -34,18 +38,21 @@ describe "Minimax" do
     @minimax.move_for(@board).should == 7
   end
 
-  it "should place in the top left corner if it goes first" do
-    @minimax.move_for(@board).should == 1
+  it "places in the top left corner if it goes first" do
+    @minimax.move_for(@board).should == 0
   end
   
-  xit "should avoid this trap I made!" do
+  it "avoids this trap I made!" do
+    # x 1 2
+    # 3 o 5
+    # 6 x 8
     @board.set_cell(0, "x")
     @board.set_cell(4, "o")
     @board.set_cell(7, "x")
-    @minimax.move_for(@board).should_not == 2
+    @minimax.move_for(@board).should == 3
   end
   
-  xit "should avoid the classic trap!" do
+  it "avoids the classic trap!" do
     @board.set_cell(0, "x")
     @minimax.move_for(@board).should == 4    
   end
