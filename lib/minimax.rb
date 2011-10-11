@@ -1,12 +1,5 @@
 require_relative 'player.rb'
-
-class Move
-  attr_accessor :position, :rating
-  def initialize(position, rating)
-    @position = position
-    @rating = rating
-  end
-end
+require_relative 'move.rb'
 
 class Minimax < Player
   def move_for(board)
