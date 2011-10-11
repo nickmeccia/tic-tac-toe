@@ -17,6 +17,7 @@ class Board
         list << marker
       end
     end
+    list.map! { |m| m == 'x' ? "\e[1;31mx\e[0m" : m == 'o' ? "\e[1;32mo\e[0m" : m }
     puts "\n#{list[0]} | #{list[1]} | #{list[2]}\n----------\n#{list[3]} | #{list[4]} | #{list[5]}\n----------\n#{list[6]} | #{list[7]} | #{list[8]}\n "
   end
   
