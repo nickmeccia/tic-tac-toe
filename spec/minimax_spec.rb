@@ -1,5 +1,4 @@
-require_relative "../lib/minimax.rb"
-require "board"
+require "nick_tac_toe"
 
 describe "Minimax" do
   before(:each) do

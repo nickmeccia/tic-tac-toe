@@ -1,4 +1,4 @@
-require_relative "../lib/board.rb"
+require "nick_tac_toe"
 
 describe Board do
   it "has a team for the computer player" do

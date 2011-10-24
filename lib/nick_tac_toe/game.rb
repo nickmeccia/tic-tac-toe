@@ -1,4 +1,4 @@
-require_relative 'board.rb'
+require 'nick_tac_toe/board'
 
 class Game
   attr_reader :board, :current_player

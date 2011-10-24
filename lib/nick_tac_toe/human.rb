@@ -1,5 +1,3 @@
-require_relative 'player.rb'
-
 class Human < Player  
   def move_for(board)
     puts "Where will you move? Pick an empty space, 1-9."

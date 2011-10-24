@@ -1,0 +1,7 @@
+require 'nick_tac_toe/board'
+require 'nick_tac_toe/game'
+require 'nick_tac_toe/player'
+require 'nick_tac_toe/human'
+require 'nick_tac_toe/minimax'
+require 'nick_tac_toe/move'
+require 'nick_tac_toe/setup'

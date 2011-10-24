@@ -1,6 +1,3 @@
-require_relative 'player.rb'
-require_relative 'move.rb'
-
 class Minimax < Player
   def move_for(board)
     get_max_move(board).position

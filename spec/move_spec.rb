@@ -1,4 +1,4 @@
-require_relative "../lib/move.rb"
+require "nick_tac_toe"
 
 describe Move do
   it "has a position" do

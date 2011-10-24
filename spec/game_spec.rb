@@ -1,5 +1,4 @@
-require_relative "../lib/game.rb"
-require_relative "../lib/human.rb"
+require "nick_tac_toe"
 
 describe "Game" do
   

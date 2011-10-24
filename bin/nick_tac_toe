@@ -1,6 +1,8 @@
-require_relative '../lib/game.rb'
-require_relative '../lib/human.rb'
-require_relative '../lib/minimax.rb'
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
+require 'nick_tac_toe'
 
 players = [Human.new("x"), Minimax.new("o")]
 players.shuffle!
